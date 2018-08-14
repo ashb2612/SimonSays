@@ -18,8 +18,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class Main {
-    // token for the bot
-    private static final String TOKEN = "NDcwNjg4MDg5ODg3NjA0NzM3.Dj90nA.QEZaRrc3nLjWoOdoZOABSrml5yw";
+    // the main method by which interaction with Discord is done
+    private static IDiscordClient client;
+
+    // Stubborn mode: bot moves itself back to voice channel if a user moves it out
+    private static final boolean STUBBORN_MODE = true;
 
     // prefix for bot commands
     private static final String PREFIX = "simon";
@@ -27,13 +30,7 @@ public class Main {
 
     private static final int NUM_OF_MUTTERINGS = 4;
 
-    // moves itself back to voice channel if a user moves it out
-    private static final boolean STUBBORN_BOT = true;
-
     private boolean botMovingItselfBack = false; // this is terrible design. to sort
-
-    // DOC: "The main method by which interaction with Discord is done"
-    private static IDiscordClient client;
 
     private IGuild currentGuild;
 
@@ -44,11 +41,11 @@ public class Main {
 
     public static void main(String[] args) throws DiscordException, RateLimitException {
         System.out.println("Logging bot in...");
-        client = new ClientBuilder().withToken(TOKEN).build();
+        System.out.println("Token: " + args[0]);
+        client = new ClientBuilder().withToken(args[0]).build();
         client.getDispatcher().registerListener(new Main());
         client.login();
     }
-
 
 
     @EventSubscriber
@@ -100,7 +97,7 @@ public class Main {
             if (event.getUser() == client.getOurUser()){
                 System.out.println("Our bot was moved!");
 
-                if (STUBBORN_BOT) {
+                if (STUBBORN_MODE) {
                     joinChannel(event.getOldChannel());
                 }
             }
