@@ -13,6 +13,7 @@ import sx.blah.discord.util.audio.events.TrackFinishEvent;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,14 +69,24 @@ public class Main {
         if (content.toLowerCase().startsWith(PREFIX))
         {
             System.out.println("Activation acknowledged");
-            joinChannel(message);
 
             System.out.println("Queueing files");
-            addAudioClipsToCollection();
-            queueAudioFilesInRandomOrder(guild);
+            try{
+                addAudioClipsToCollection();
+                queueAudioFilesInRandomOrder(guild);
 
-            System.out.println("Playing");
-            playing(guild, false);
+                joinChannel(message);
+
+                System.out.println("Playing");
+                playing(guild, false);
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+                System.out.println("Audio clips location " + audioClipsPathname);
+            }
+
+
         }
         else if (content.toLowerCase().startsWith(LEAVE_REQUEST))
         {
@@ -183,8 +194,7 @@ public class Main {
     }
 
 
-    private void addAudioClipsToCollection()
-    {
+    private void addAudioClipsToCollection() throws FileNotFoundException {
         System.out.println("Adding audio clips to collection");
 
         audioClips.clear();
@@ -202,7 +212,7 @@ public class Main {
         }
 
         if (audioClips.size() < 1){
-            System.out.println("NO FILES QUEUED");
+            throw new FileNotFoundException("No files found");
         }
     }
 
