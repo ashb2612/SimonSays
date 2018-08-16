@@ -1,3 +1,4 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -39,12 +40,17 @@ public class Main {
     private static final String audioClipsPathname = "./src/main/java/audioClips/";
     // also works: "C:\\SimonAudio\\clips\\"
 
-    public static void main(String[] args) throws DiscordException, RateLimitException {
-        System.out.println("Logging bot in...");
-        System.out.println("Token: " + args[0]);
-        client = new ClientBuilder().withToken(args[0]).build();
-        client.getDispatcher().registerListener(new Main());
-        client.login();
+    public static void main(String[] args) throws DiscordException, RateLimitException, IllegalArgumentException {
+        if (args.length == 0) {
+            System.out.println("ERROR: Please specify discord token as an argument");
+            throw new IllegalArgumentException();
+        } else {
+            System.out.println("Logging bot in...");
+            System.out.println("Token: " + args[0]);
+            client = new ClientBuilder().withToken(args[0]).build();
+            client.getDispatcher().registerListener(new Main());
+            client.login();
+        }
     }
 
 
