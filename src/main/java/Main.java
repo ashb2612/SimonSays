@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -29,7 +28,6 @@ public class Main {
     // prefix for bot commands
     private static final String PREFIX = "simon";
     private static final String LEAVE_REQUEST = "!dc";
-
     private static final int NUM_OF_MUTTERINGS = 4;
 
     private boolean botMovingItselfBack = false; // this is terrible design. to sort
@@ -38,12 +36,11 @@ public class Main {
 
     private List<File> audioClips = new ArrayList<>();
 
-    private static final String audioClipsPathname = "./src/main/java/audioClips/";
-    // also works: "C:\\SimonAudio\\clips\\"
+    private static String audioClipsPathname = "";
 
     public static void main(String[] args) throws DiscordException, RateLimitException, IllegalArgumentException {
-        if (args.length == 0) {
-            System.out.println("ERROR: Please specify discord token as an argument");
+        if (args.length < 2) {
+            System.out.println("Required args: Token, PathToFiles");
             throw new IllegalArgumentException();
         } else {
             System.out.println("Logging bot in...");
@@ -51,6 +48,7 @@ public class Main {
             client = new ClientBuilder().withToken(args[0]).build();
             client.getDispatcher().registerListener(new Main());
             client.login();
+            audioClipsPathname = args[1];
         }
     }
 
