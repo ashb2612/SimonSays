@@ -49,7 +49,7 @@ public class Main {
             client.getDispatcher().registerListener(new Main());
             client.login();
             audioClipsPathname = args[1];
-            System.out.println("Path to audio clips:" + audioClipsPathname);
+            System.out.println("Path to audio clips: " + audioClipsPathname);
         }
     }
 
