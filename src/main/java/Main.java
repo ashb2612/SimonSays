@@ -1,6 +1,7 @@
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
+import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.voice.user.UserVoiceChannelMoveEvent;
 import sx.blah.discord.handle.obj.*;
@@ -53,6 +54,10 @@ public class Main {
         }
     }
 
+    @EventSubscriber
+    public void isReady(ReadyEvent event){
+        changePresence();
+    }
 
     @EventSubscriber
     public void onMessage(MessageReceivedEvent event) throws RateLimitException, DiscordException, MissingPermissionsException, IOException, UnsupportedAudioFileException{
@@ -70,7 +75,7 @@ public class Main {
             System.out.println("Activation acknowledged");
 
             System.out.println("Queueing files");
-            try{
+            try {
                 addAudioClipsToCollection();
                 queueAudioFilesInRandomOrder(guild);
 
@@ -121,6 +126,10 @@ public class Main {
         else {
             botMovingItselfBack = false;
         }
+    }
+
+    private void changePresence(){
+        client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, "with Theo");
     }
 
     private void joinChannel(IVoiceChannel voiceChannel){
