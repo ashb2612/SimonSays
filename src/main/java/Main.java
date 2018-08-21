@@ -171,9 +171,8 @@ public class Main {
             System.out.println(message.getAuthor() + " is not in a voice channel");
         }
         else {
-            System.out.println("Joining channel: " + message);
-
             IVoiceChannel channelToBeJoined = getVoiceChannelForMessageSender(message);
+            System.out.println("Joining: " + currentGuild.getName() + " | " + channelToBeJoined.getName());
             channelToBeJoined.join();
         }
     }
