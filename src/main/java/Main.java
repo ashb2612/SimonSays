@@ -107,7 +107,7 @@ public class Main {
 
         if (!event.getNewTrack().isPresent())
         {
-            System.out.println("No more clips to play. Leaving.");
+            System.out.println("No more clips to play.");
             leaveVoiceChannel(currentGuild);
         }
     }
@@ -154,11 +154,11 @@ public class Main {
         // shuffle values
         Collections.shuffle(order);
 
-        System.out.print("Play order: ");
-        for (Integer eachOrderItem : order) {
-            System.out.print(eachOrderItem + ", ");
-        }
-        System.out.println();
+        System.out.println("Play order: " + order.toString());
+//        for (Integer eachOrderItem : order) {
+//            System.out.print(eachOrderItem + ", ");
+//        }
+//        System.out.println();
 
         // queue files
         for (int i = 0; i < NUM_OF_MUTTERINGS; i++){
