@@ -155,10 +155,6 @@ public class Main {
         Collections.shuffle(order);
 
         System.out.println("Play order: " + order.toString());
-//        for (Integer eachOrderItem : order) {
-//            System.out.print(eachOrderItem + ", ");
-//        }
-//        System.out.println();
 
         // queue files
         for (int i = 0; i < NUM_OF_MUTTERINGS; i++){
@@ -167,8 +163,8 @@ public class Main {
     }
 
     private void joinChannel(IMessage message) throws RateLimitException, DiscordException, MissingPermissionsException {
-        if (message.getAuthor().getVoiceStates().size() < 1) {
-            System.out.println(message.getAuthor() + " is not in a voice channel");
+        if (message.getAuthor().getVoiceStateForGuild(currentGuild).getChannel() == null) {
+            System.out.println(message.getAuthor().getName() + " is not in a voice channel for guild: " + currentGuild.getName());
         }
         else {
             IVoiceChannel channelToBeJoined = getVoiceChannelForMessageSender(message);
