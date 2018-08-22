@@ -168,7 +168,7 @@ public class Main {
         }
         else {
             IVoiceChannel channelToBeJoined = getVoiceChannelForMessageSender(message);
-            System.out.println("Joining: " + currentGuild.getName() + " | " + channelToBeJoined.getName());
+            System.out.println(java.time.LocalDateTime.now() + " Joining: " + currentGuild.getName() + " | " + channelToBeJoined.getName());
             channelToBeJoined.join();
         }
     }
