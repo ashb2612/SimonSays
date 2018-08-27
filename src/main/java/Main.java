@@ -74,6 +74,8 @@ public class Main {
         {
             System.out.println("Activation acknowledged");
 
+            changePresence();
+
             System.out.println("Queueing files");
             try {
                 addAudioClipsToCollection();
